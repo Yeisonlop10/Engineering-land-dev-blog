@@ -1,12 +1,30 @@
 import "./globals.css";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 import { GoogleAnalytics } from "@/app/components/google-analytics";
 import { GoogleAnalyticsPageViews } from "@/app/components/google-analytics-page-views";
+import {
+  BING_SITE_VERIFICATION,
+  GOOGLE_SITE_VERIFICATION,
+  SITE_URL,
+} from "@/app/lib/site";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Leadership & Infrastructure",
   description: "Notes on engineering leadership, infrastructure, and architecture.",
+  metadataBase: new URL(SITE_URL),
+  verification:
+    GOOGLE_SITE_VERIFICATION || BING_SITE_VERIFICATION
+      ? {
+          ...(GOOGLE_SITE_VERIFICATION
+            ? { google: GOOGLE_SITE_VERIFICATION }
+            : {}),
+          ...(BING_SITE_VERIFICATION
+            ? { other: { "msvalidate.01": BING_SITE_VERIFICATION } }
+            : {}),
+        }
+      : undefined,
 };
 
 export default function RootLayout({
