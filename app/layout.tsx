@@ -18,10 +18,10 @@ export default function RootLayout({
           <div className="site-shell">
             <div className="glass-panel flex flex-col gap-4 rounded-[2rem] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <Link href="/" className="flex items-center gap-4">
-                <span className="brand-mark">YL</span>
+                <div className="brand-mark">Yeison Lopez</div>
                 <span>
                   <span className="eyebrow mb-2">Independent engineering writing</span>
-                  <span className="brand-copy block">Leadership & Infrastructure</span>
+                  <span className="brand-copy block">Leadership & Engineering</span>
                 </span>
               </Link>
 

@@ -149,6 +149,7 @@ a {
   max-width: 62ch;
   font-size: clamp(1.08rem, 2.2vw, 1.26rem);
   line-height: 1.75;
+  text-align: justify;
   color: var(--text-body);
 }
 
@@ -196,12 +197,13 @@ a {
 
 .brand-mark {
   display: grid;
+  justify-content: center;
   place-items: center;
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 6rem;
+  height: 4.8rem;
   border-radius: 1rem;
   color: white;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.04em;
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.28), transparent 40%),
@@ -289,6 +291,10 @@ a {
   margin-top: 1.4em;
 }
 
+.article-prose h1 {
+  font-weight: bold;
+}
+
 .article-prose h2,
 .article-prose h3,
 .article-prose h4 {
@@ -313,6 +319,7 @@ a {
 
 .article-prose p {
   max-width: 68ch;
+  text-align: justify;
 }
 
 .article-prose a {
@@ -457,6 +464,12 @@ a {
   .article-prose {
     font-size: 1.01rem;
     line-height: 1.82;
+  }
+
+  .brand-mark {
+    width: 5.2rem;
+    height: 4rem;
+    font-size: 0.7rem;
   }
 }
 
