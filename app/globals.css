@@ -291,7 +291,7 @@ a {
   margin-top: 1.4em;
 }
 
-.article-prose h1{
+.article-prose h1 {
   font-weight: bold;
 }
 
@@ -319,7 +319,6 @@ a {
 
 .article-prose p {
   max-width: 68ch;
-  display: flex;
   text-align: justify;
 }
 

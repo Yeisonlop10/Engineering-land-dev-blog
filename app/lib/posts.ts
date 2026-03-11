@@ -23,13 +23,13 @@ const LOCAL_POST_CONTENT: Record<string, string> = {
 
 When we take on a new engineering leadership role, the first 90 days are crucial in setting the tone, building relationships, and laying the foundation for success. Here are some key things to focus on during this period:
 
-Learn the business: Learn the business, including the products, services, and teams.
-Build relationships: Build relationships with your team members, stakeholders, and colleagues.
-Set the tone: Set the tone for your leadership style, values, and priorities.
-Clarify expectations: Clarify expectations with your team, stakeholders, and superiors.
-Identify priorities: Identify the priorities for your team and the organization.
-Establish a presence: Establish a presence in your new role, including setting up your workspace and communication channels.
-Focus on people: Focus on your team members, including their needs, concerns, and goals.
+- Learn the business: Learn the business, including the products, services, and teams.
+- Build relationships: Build relationships with your team members, stakeholders, and colleagues.
+- Set the tone: Set the tone for your leadership style, values, and priorities.
+- Clarify expectations: Clarify expectations with your team, stakeholders, and superiors.
+- Identify priorities: Identify the priorities for your team and the organization.
+- Establish a presence: Establish a presence in your new role, including setting up your workspace and communication channels.
+- Focus on people: Focus on your team members, including their needs, concerns, and goals.
 By focusing on these areas, we can set ourselves up for success in our new engineering leadership role and build a strong foundation for our teams and organizations.
 
 ## Focus
@@ -46,11 +46,11 @@ Platform thinking is all about building a foundation that can support multiple p
 
 To adopt platform thinking, follow these steps:
 
-Identify reusable components: Identify the components that can be reused across multiple products or services.
-Build a foundation: Build a solid foundation that can support multiple products or services.
-Modularize: Modularize your components and applications to make them reusable and maintainable.
-Standardize: Standardize your processes, tools, and technologies to ensure consistency and scalability.
-Monitor and adapt: Monitor your platform's performance and adapt it as needed to ensure it continues to meet the needs of your growing team.
+- Identify reusable components: Identify the components that can be reused across multiple products or services.
+- Build a foundation: Build a solid foundation that can support multiple products or services.
+- Modularize: Modularize your components and applications to make them reusable and maintainable.
+- Standardize: Standardize your processes, tools, and technologies to ensure consistency and scalability.
+- Monitor and adapt: Monitor your platform's performance and adapt it as needed to ensure it continues to meet the needs of your growing team.
 By adopting a platform thinking approach, we can build a foundation that can support our growing teams, reduce technical debt, and improve our overall scalability and efficiency.
 
 ## Principles
@@ -67,11 +67,11 @@ Blame is a natural human response to failure. However, it's not helpful in an in
 
 To run incident reviews without blame, follow these steps:
 
-Set the tone: Establish a tone of curiosity and inquiry, rather than accusation and blame.
-Focus on the facts: Stick to the facts and avoid speculation or assumptions.
-Identify root causes: Identify the underlying causes of the incident, rather than pointing fingers at specific individuals.
-Discuss mitigations: Discuss the mitigations that could have prevented the incident, and how we can implement them in the future.
-Create an action plan: Create a concrete action plan to prevent similar incidents from occurring in the future.
+- Set the tone: Establish a tone of curiosity and inquiry, rather than accusation and blame.
+- Focus on the facts: Stick to the facts and avoid speculation or assumptions.
+- Identify root causes: Identify the underlying causes of the incident, rather than pointing fingers at specific individuals.
+- Discuss mitigations: Discuss the mitigations that could have prevented the incident, and how we can implement them in the future.
+- Create an action plan: Create a concrete action plan to prevent similar incidents from occurring in the future.
 By focusing on the facts, identifying root causes, and creating an action plan, we can run incident reviews that are constructive, learning-oriented, and focused on improvement.
 
 ## Outcomes
@@ -86,18 +86,19 @@ As engineering leaders, we know that architecture decisions are crucial to the s
 
 That's where the Lightweight Architecture Decision Record (ADR) approach comes in. An ADR is a lightweight document that captures the reasoning behind an architecture decision. It's a simple template that includes the following:
 
-Decision: A brief summary of the decision made.
-Context: The background and motivations behind the decision.
-Trade-offs: A discussion of the trade-offs made in reaching the decision.
-Consequences: An outline of the potential consequences of the decision.
-Reviewer: The name and role of the person reviewing the decision.
+- Decision: A brief summary of the decision made.
+- Context: The background and motivations behind the decision.
+- Trade-offs: A discussion of the trade-offs made in reaching the decision.
+- Consequences: An outline of the potential consequences of the decision.
+- Reviewer: The name and role of the person reviewing the decision.
+
 Using ADRs, we can make architecture decisions at speed while maintaining transparency, accountability, and quality. Here's how:
 
-Identify the decision: Recognize the need for an architecture decision and start the ADR process.
-Gather input: Gather input from relevant stakeholders, including team members and subject matter experts.
-Document the ADR: Write the ADR, following the template, and include the input gathered.
-Review and validate: Review the ADR and validate the decision with the relevant stakeholders.
-Implement and refine: Implement the decision and refine it as needed based on feedback and new information.
+- Identify the decision: Recognize the need for an architecture decision and start the ADR process.
+- Gather input: Gather input from relevant stakeholders, including team members and subject matter experts.
+- Document the ADR: Write the ADR, following the template, and include the input gathered.
+- Review and validate: Review the ADR and validate the decision with the relevant stakeholders.
+- Implement and refine: Implement the decision and refine it as needed based on feedback and new information.
 By using ADRs, we can make architecture decisions quickly, while maintaining the quality and integrity of our products.
 
 ## ADR Template
@@ -114,7 +115,7 @@ A project mindset focuses on delivering a specific outcome, whereas a product mi
 
 To make this shift, we need to adopt a more long-term perspective, prioritize customer needs, and focus on delivering a continuous stream of value. This means rethinking our priorities, processes, and metrics. For example, we might shift from measuring project success by deadline completion to measuring it by customer satisfaction and retention.
 
-As leaders, it's our job to create an environment that encourages experimentation, learning, and iteration. We need to empower our teams to take ownership of the product, make decisions quickly, and prioritize features that drive customer value. By adopting a product mindset, we can build products that truly matter to our customers and drive long-term success..
+As leaders, it's our job to create an environment that encourages experimentation, learning, and iteration. We need to empower our teams to take ownership of the product, make decisions quickly, and prioritize features that drive customer value. By adopting a product mindset, we can build products that truly matter to our customers and drive long-term success.
 
 ## Shift
 - From delivery dates to customer impact
