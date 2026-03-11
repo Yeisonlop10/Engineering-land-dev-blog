@@ -83,7 +83,7 @@ export default async function HomePage() {
                 </div>
 
                 <Link
-                  href={`/blog/${featuredPost.slug}`}
+                  href={`/blog/${featuredPost.slug}/`}
                   aria-label={`Read the essay ${featuredPost.title}`}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
                 >
@@ -152,7 +152,7 @@ export default async function HomePage() {
                 </div>
 
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={`/blog/${post.slug}/`}
                   aria-label={`Open article ${post.title}`}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
                 >

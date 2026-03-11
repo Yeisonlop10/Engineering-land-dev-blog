@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
 
 export function resolveAssetUrl(path?: string) {
   if (!path) {
@@ -11,7 +11,8 @@ export function resolveAssetUrl(path?: string) {
     return path;
   }
 
-  return `${basePath}${path}`;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${basePath}${normalizedPath}`;
 }
 
 export function getPosterStyle(path?: string): CSSProperties {
@@ -23,7 +24,10 @@ export function getPosterStyle(path?: string): CSSProperties {
   ];
 
   if (resolved) {
-    layers.push(`url("${resolved}")`);
+    const encoded = encodeURIComponent(resolved)
+      .replace(/%2F/g, "/")
+      .replace(/%3A/g, ":");
+    layers.push(`url("${encoded}")`);
   }
 
   return {
