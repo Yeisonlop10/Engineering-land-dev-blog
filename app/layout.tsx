@@ -1,6 +1,9 @@
 import "./globals.css";
 import Link from "next/link";
 
+import { GoogleAnalytics } from "@/app/components/google-analytics";
+import { GoogleAnalyticsPageViews } from "@/app/components/google-analytics-page-views";
+
 export const metadata = {
   title: "Leadership & Infrastructure",
   description: "Notes on engineering leadership, infrastructure, and architecture.",
@@ -12,6 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <GoogleAnalytics />
+        <GoogleAnalyticsPageViews />
         <div className="page-backdrop" aria-hidden="true" />
 
         <header className="sticky top-0 z-40 pt-4">
