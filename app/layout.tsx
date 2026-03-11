@@ -10,12 +10,22 @@ import {
   SITE_URL,
 } from "@/app/lib/site";
 
+function getMetadataBase(): URL {
+  try {
+    return new URL(SITE_URL);
+  } catch {
+    throw new Error(
+      `Invalid SITE_URL value "${SITE_URL}". SITE_URL must be an absolute URL, including scheme (e.g. "https://example.com").`
+    );
+  }
+}
+
 export const metadata: Metadata = {
   title: "Leadership & Infrastructure",
   description: "Notes on engineering leadership, infrastructure, and architecture.",
-  metadataBase: new URL(SITE_URL),
+  metadataBase: getMetadataBase(),
   verification:
-    GOOGLE_SITE_VERIFICATION || BING_SITE_VERIFICATION
+    (GOOGLE_SITE_VERIFICATION || BING_SITE_VERIFICATION)
       ? {
           ...(GOOGLE_SITE_VERIFICATION
             ? { google: GOOGLE_SITE_VERIFICATION }
