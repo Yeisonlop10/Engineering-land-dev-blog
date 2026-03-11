@@ -1,126 +1,164 @@
-// import Image from "next/image";
-
-// export default function Home() {
-//   return (
-//     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-//       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-//         <Image
-//           className="dark:invert"
-//           src="/next.svg"
-//           alt="Next.js logo"
-//           width={100}
-//           height={20}
-//           priority
-//         />
-//         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-//           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-//             To get started, edit the page.tsx file.
-//           </h1>
-//           <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-//             Looking for a starting point or more instructions? Head over to{" "}
-//             <a
-//               href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-//               className="font-medium text-zinc-950 dark:text-zinc-50"
-//             >
-//               Templates
-//             </a>{" "}
-//             or the{" "}
-//             <a
-//               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-//               className="font-medium text-zinc-950 dark:text-zinc-50"
-//             >
-//               Learning
-//             </a>{" "}
-//             center.
-//           </p>
-//         </div>
-//         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-//           <a
-//             className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-//             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//           >
-//             <Image
-//               className="dark:invert"
-//               src="/vercel.svg"
-//               alt="Vercel logomark"
-//               width={16}
-//               height={16}
-//             />
-//             Deploy Now
-//           </a>
-//           <a
-//             className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-//             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//           >
-//             Documentation
-//           </a>
-//         </div>
-//       </main>
-//     </div>
-//   );
-// }
-
-
 import Link from "next/link";
-import { getAllPostsMeta } from "@/app/lib/posts";
 import { format } from "date-fns";
+import { ArrowRight, BookOpenText, Clock3, Layers3, NotebookPen } from "lucide-react";
+
+import { getPosterStyle } from "@/app/lib/presentation";
+import { getAllPostsMeta } from "@/app/lib/posts";
 
 export default async function HomePage() {
   const posts = await getAllPostsMeta();
+  const [featuredPost, ...restPosts] = posts;
+  const totalReadingTime = posts.reduce(
+    (sum, post) => sum + (post.readingTimeMinutes ?? 0),
+    0
+  );
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100">
-      <section className="mx-auto max-w-5xl px-6 py-16">
-        <div className="mb-12">
-          <p className="mb-3 text-sm uppercase tracking-[0.2em] text-zinc-400">
-            Leadership • Infrastructure • Architecture
-          </p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Leadership & Infrastructure Notes
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-zinc-300">
-            Lessons from engineering leadership, platform work, reliability,
-            architecture, and scaling teams.
+    <main className="pb-16 pt-6 sm:pb-20">
+      <section className="site-shell">
+        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="glass-panel subtle-grid rounded-[2.5rem] px-7 py-8 sm:px-10 sm:py-12">
+            <p className="eyebrow">Leadership, platforms, and architecture</p>
+            <h1 className="display-title mt-6">
+              Notes for engineering leaders building durable systems.
+            </h1>
+            <p className="lead-copy mt-6">
+              A modern engineering blog for practical lessons on team design,
+              platform strategy, reliability, and the operating habits that
+              help organizations scale without losing clarity.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <span className="metric-pill">
+                <NotebookPen className="h-4 w-4 text-[var(--accent-strong)]" />
+                {posts.length} published essays
+              </span>
+              <span className="metric-pill">
+                <Clock3 className="h-4 w-4 text-[var(--accent-strong)]" />
+                {totalReadingTime} minutes of reading
+              </span>
+              <span className="metric-pill">
+                <Layers3 className="h-4 w-4 text-[var(--accent-strong)]" />
+                Leadership to infrastructure
+              </span>
+            </div>
+          </div>
+
+          {featuredPost ? (
+            <article className="glass-panel post-card rounded-[2.3rem] p-4 sm:p-5">
+              <div
+                className="poster-frame min-h-[23rem]"
+                style={getPosterStyle(featuredPost.coverImage)}
+              >
+                <div className="poster-content">
+                  <p className="poster-kicker">Latest essay</p>
+                  <h2 className="poster-title">{featuredPost.title}</h2>
+                </div>
+              </div>
+
+              <div className="px-2 pb-2 pt-6">
+                <div className="flex flex-wrap gap-2">
+                  {featuredPost.tags.map((tag) => (
+                    <span key={tag} className="tag-pill">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="mt-4 text-base leading-7 muted-copy">
+                  {featuredPost.description}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-3 text-sm">
+                  <span className="meta-pill">
+                    <BookOpenText className="h-4 w-4 text-[var(--accent-strong)]" />
+                    {format(new Date(featuredPost.publishedAt), "MMMM d, yyyy")}
+                  </span>
+                  {featuredPost.readingTimeMinutes ? (
+                    <span className="meta-pill">
+                      <Clock3 className="h-4 w-4 text-[var(--accent-strong)]" />
+                      {featuredPost.readingTimeMinutes} min read
+                    </span>
+                  ) : null}
+                </div>
+
+                <Link
+                  href={`/blog/${featuredPost.slug}/`}
+                  aria-label={`Read the essay ${featuredPost.title}`}
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
+                >
+                  Read the essay
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </article>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="site-shell mt-8 sm:mt-10">
+        <div className="mb-6 flex flex-col gap-4 sm:mb-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="eyebrow">Recent writing</p>
+            <h2 className="section-title mt-4">A cleaner reading experience for every post.</h2>
+          </div>
+          <p className="max-w-xl text-sm leading-7 muted-copy">
+            The card system below is designed to scale cleanly as the blog grows
+            and to keep tags, metadata, affiliate references, and future media
+            previews visually consistent.
           </p>
         </div>
 
-        <div className="grid gap-6">
-          {posts.map((post) => (
+        <div className="grid gap-5 md:grid-cols-2">
+          {restPosts.map((post) => (
             <article
               key={post.slug}
-              className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6"
+              className="glass-panel post-card rounded-[2rem] p-4 sm:p-5"
             >
-              <div className="mb-3 flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div
+                className="poster-frame min-h-[15rem]"
+                style={getPosterStyle(post.coverImage)}
+              >
+                <div className="poster-content">
+                  <p className="poster-kicker">Essay</p>
+                  <h3 className="poster-title">{post.title}</h3>
+                </div>
               </div>
 
-              <h2 className="text-2xl font-semibold">
+              <div className="px-1 pb-1 pt-5">
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <span key={tag} className="tag-pill">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="mt-4 text-base leading-7 muted-copy">
+                  {post.description}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-3 text-sm">
+                  <span className="meta-pill">
+                    <BookOpenText className="h-4 w-4 text-[var(--accent-strong)]" />
+                    {format(new Date(post.publishedAt), "MMMM d, yyyy")}
+                  </span>
+                  {post.readingTimeMinutes ? (
+                    <span className="meta-pill">
+                      <Clock3 className="h-4 w-4 text-[var(--accent-strong)]" />
+                      {post.readingTimeMinutes} min read
+                    </span>
+                  ) : null}
+                </div>
+
                 <Link
-                  href={`/blog/${post.slug}`}
-                  className="hover:text-zinc-200 underline-offset-4 hover:underline"
+                  href={`/blog/${post.slug}/`}
+                  aria-label={`Open article ${post.title}`}
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
                 >
-                  {post.title}
+                  Open article
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
-              </h2>
-
-              <p className="mt-3 text-zinc-300">{post.description}</p>
-
-              <div className="mt-4 text-sm text-zinc-400">
-                {format(new Date(post.publishedAt), "MMMM d, yyyy")}
-                {post.readingTimeMinutes
-                  ? ` • ${post.readingTimeMinutes} min read`
-                  : ""}
               </div>
             </article>
           ))}
