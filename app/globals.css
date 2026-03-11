@@ -418,12 +418,14 @@ a {
 
 .subtle-grid {
   position: relative;
+  overflow: hidden;
 }
 
 .subtle-grid::before {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background-image:
     linear-gradient(rgba(19, 32, 43, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(19, 32, 43, 0.025) 1px, transparent 1px);
@@ -434,7 +436,7 @@ a {
 
 @media (max-width: 768px) {
   .site-shell {
-    width: min(100% - 1rem, 1120px);
+    width: min(1120px, calc(100% - 1rem));
   }
 
   .display-title {

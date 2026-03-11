@@ -95,7 +95,10 @@ export default async function BlogPostPage({ params }: Props) {
 function BookMetaDate({ publishedAt }: { publishedAt: string }) {
   return (
     <>
-      <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+      <span
+        aria-hidden="true"
+        className="h-2 w-2 rounded-full bg-[var(--accent)]"
+      />
       {format(new Date(publishedAt), "MMMM d, yyyy")}
     </>
   );
