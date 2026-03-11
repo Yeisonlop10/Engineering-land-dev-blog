@@ -9,19 +9,23 @@ export type PostMeta = {
   coverImage?: string;
   author?: string;
   readingTimeMinutes?: number;
+  containsAffiliateLinks?: boolean;
+  mediaCaption?: string;
 };
 
 export type Post = PostMeta & {
   content: string;
 };
 
-const BASE_URL = process.env.GCS_PUBLIC_BASE_URL!;
+const BASE_URL = process.env.GCS_PUBLIC_BASE_URL;
 
 const LOCAL_POST_CONTENT: Record<string, string> = {
   "engineering-leadership-first-90-days": `
 # Engineering Leadership: The First 90 Days
 
 The first 90 days are about trust, clarity, and momentum.
+
+![Leadership notebook](/images/first-90-days.jpg)
 
 ## Focus
 - Build relationships
@@ -32,6 +36,8 @@ The first 90 days are about trust, clarity, and momentum.
 # Platform Thinking for Growing Teams
 
 Internal platforms reduce cognitive load and increase delivery speed.
+
+https://www.youtube.com/watch?v=3qHkcs3kG44
 
 ## Principles
 - Self-service
@@ -102,6 +108,8 @@ const posts: PostMeta[] = [
       coverImage: "/images/first-90-days.jpg",
       author: "Yeison Lopez",
       readingTimeMinutes: 8,
+      containsAffiliateLinks: true,
+      mediaCaption: "A practical planning worksheet used during the first leadership month.",
     },
     {
       slug: "platform-thinking-for-growing-teams",
@@ -112,6 +120,7 @@ const posts: PostMeta[] = [
       coverImage: "/images/platform-thinking.jpg",
       author: "Yeison Lopez",
       readingTimeMinutes: 10,
+      mediaCaption: "A system view showing platform capabilities across multiple product teams.",
     },
     {
       slug: "incident-review-without-blame",
@@ -184,6 +193,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   return {
     ...meta,
     content: parsed.content,
+ 
   };
 }
 

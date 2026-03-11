@@ -67,65 +67,63 @@
 
 import Link from "next/link";
 import { getAllPostsMeta } from "@/app/lib/posts";
-import { format } from "date-fns";
+import { SiteContainer } from "@/app/components/site-container";
+import { PostCard } from "@/app/components/post-card";
 
 export default async function HomePage() {
   const posts = await getAllPostsMeta();
+  const [featured, ...latest] = posts;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100">
-      <section className="mx-auto max-w-5xl px-6 py-16">
-        <div className="mb-12">
-          <p className="mb-3 text-sm uppercase tracking-[0.2em] text-zinc-400">
+    <main className="py-10 md:py-16">
+      <SiteContainer>
+        <section className="mb-12 rounded-3xl border border-[var(--color-border)] bg-[color:color-mix(in_oklab,var(--color-surface)_78%,white_22%)] p-8 shadow-[var(--shadow-soft)] md:p-12">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-subtle)] md:text-sm">
             Leadership • Infrastructure • Architecture
           </p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Leadership & Infrastructure Notes
+          <h1 className="font-[var(--font-reading)] text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+            Field Notes for Engineering Leaders
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-zinc-300">
-            Lessons from engineering leadership, platform work, reliability,
-            architecture, and scaling teams.
+          <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
+            Practical ideas on scaling teams, shaping platform strategy, and improving reliability without losing the
+            human side of engineering.
           </p>
-        </div>
-
-        <div className="grid gap-6">
-          {posts.map((post) => (
-            <article
-              key={post.slug}
-              className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6"
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link
+              href="/blog"
+              className="rounded-full bg-[var(--color-accent)] px-5 py-2 text-sm font-medium text-white transition hover:brightness-110"
             >
-              <div className="mb-3 flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              Explore All Posts
+            </Link>
+            <Link
+              href="/about"
+              className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2 text-sm font-medium"
+            >
+              About the Author
+            </Link>
+          </div>
+        </section>
 
-              <h2 className="text-2xl font-semibold">
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="hover:text-zinc-200 underline-offset-4 hover:underline"
-                >
-                  {post.title}
-                </Link>
-              </h2>
+        {featured ? (
+          <section className="mb-12">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-[var(--font-reading)] text-2xl font-semibold md:text-3xl">Featured</h2>
+            </div>
+            <PostCard post={featured} featured />
+          </section>
+        ) : null}
 
-              <p className="mt-3 text-zinc-300">{post.description}</p>
-
-              <div className="mt-4 text-sm text-zinc-400">
-                {format(new Date(post.publishedAt), "MMMM d, yyyy")}
-                {post.readingTimeMinutes
-                  ? ` • ${post.readingTimeMinutes} min read`
-                  : ""}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+        <section>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="font-[var(--font-reading)] text-2xl font-semibold md:text-3xl">Latest Articles</h2>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {latest.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </section>
+      </SiteContainer>
     </main>
   );
 }
