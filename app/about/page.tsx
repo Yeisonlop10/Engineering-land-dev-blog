@@ -9,7 +9,8 @@ export default function AboutPage() {
               Practical writing for engineering organizations in motion.
             </h1>
             <p className="lead-copy mt-6">
-              I write about engineering leadership, infrastructure, platform
+              Hi, I'm Yeison Lopez, I'm an engineer leader with more than 20 years of experience across the engineering industry. From networking, renewable energies
+              to software engineering, I have worked all the way from junior to leadership roles. I write about engineering leadership, infrastructure, platform
               thinking, reliability, and the systems that help teams scale
               without increasing chaos.
             </p>

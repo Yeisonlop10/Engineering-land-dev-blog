@@ -149,6 +149,7 @@ a {
   max-width: 62ch;
   font-size: clamp(1.08rem, 2.2vw, 1.26rem);
   line-height: 1.75;
+  text-align: justify;
   color: var(--text-body);
 }
 
