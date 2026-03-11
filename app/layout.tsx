@@ -29,7 +29,7 @@ export default function RootLayout({
                 <Link href="/" className="nav-link">
                   Home
                 </Link>
-                <Link href="/about" className="nav-link">
+                <Link href="/about/" className="nav-link">
                   About
                 </Link>
               </nav>
@@ -54,7 +54,7 @@ export default function RootLayout({
                 <Link href="/" className="nav-link !px-0">
                   Latest posts
                 </Link>
-                <Link href="/about" className="nav-link !px-0">
+                <Link href="/about/" className="nav-link !px-0">
                   About
                 </Link>
                 <span className="muted-copy">© 2026 Yeison Lopez Ibarra</span>
