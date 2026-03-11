@@ -10,7 +10,12 @@ declare global {
 }
 
 export function pageview(url: string) {
-  if (!GA_MEASUREMENT_ID || typeof window.gtag !== "function") {
+  if (
+    typeof window === "undefined" ||
+    typeof document === "undefined" ||
+    !GA_MEASUREMENT_ID ||
+    typeof window.gtag !== "function"
+  ) {
     return;
   }
 

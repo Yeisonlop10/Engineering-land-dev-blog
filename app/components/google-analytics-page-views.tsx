@@ -14,7 +14,7 @@ export function GoogleAnalyticsPageViews() {
     }
 
     const query = window.location.search;
-    const url = query ? `${pathname}?${query}` : pathname;
+    const url = `${pathname}${query}`;
 
     pageview(url);
   }, [pathname]);
