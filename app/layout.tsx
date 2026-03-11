@@ -11,24 +11,55 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="bg-zinc-950 text-zinc-100 antialiased">
-        <header className="border-b border-zinc-800">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-            <Link href="/" className="font-semibold tracking-tight">
-              Leadership & Infrastructure
-            </Link>
-            <nav className="flex gap-6 text-sm text-zinc-300">
-              <Link href="/">Home</Link>
-              <Link href="/about">About</Link>
-            </nav>
+      <body className="antialiased">
+        <div className="page-backdrop" aria-hidden="true" />
+
+        <header className="sticky top-0 z-40 pt-4">
+          <div className="site-shell">
+            <div className="glass-panel flex flex-col gap-4 rounded-[2rem] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+              <Link href="/" className="flex items-center gap-4">
+                <span className="brand-mark">YL</span>
+                <span>
+                  <span className="eyebrow mb-2">Independent engineering writing</span>
+                  <span className="brand-copy block">Leadership & Infrastructure</span>
+                </span>
+              </Link>
+
+              <nav className="flex flex-wrap items-center gap-2">
+                <Link href="/" className="nav-link">
+                  Home
+                </Link>
+                <Link href="/about" className="nav-link">
+                  About
+                </Link>
+              </nav>
+            </div>
           </div>
         </header>
 
         {children}
 
-        <footer className="border-t border-zinc-800">
-          <div className="mx-auto max-w-5xl px-6 py-6 text-sm text-zinc-400">
-            © 2026 Yeison Lopez Ibarra
+        <footer className="pb-10 pt-4">
+          <div className="site-shell">
+            <div className="glass-panel flex flex-col gap-5 rounded-[2rem] px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="eyebrow">Built for long-form reading</p>
+                <p className="mt-3 max-w-2xl text-sm leading-7 muted-copy">
+                  Essays on leadership, infrastructure, architecture, and the
+                  operating systems behind healthy engineering organizations.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 text-sm">
+                <Link href="/" className="nav-link !px-0">
+                  Latest posts
+                </Link>
+                <Link href="/about" className="nav-link !px-0">
+                  About
+                </Link>
+                <span className="muted-copy">© 2026 Yeison Lopez Ibarra</span>
+              </div>
+            </div>
           </div>
         </footer>
       </body>
