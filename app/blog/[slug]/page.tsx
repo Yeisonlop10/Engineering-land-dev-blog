@@ -10,6 +10,7 @@ import {
 import { getPosterStyle } from "@/app/lib/presentation";
 import { getCanonicalUrl } from "@/app/lib/site";
 import { RelatedPosts } from "@/app/components/related-posts";
+import { AffiliateLink } from "@/app/components/affiliate-link";
 import ReactMarkdown, { type Components } from "react-markdown";
 import { format } from "date-fns";
 import { ArrowLeft, Clock3, UserRound } from "lucide-react";
@@ -18,27 +19,64 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
-const markdownComponents: Components = {
-  a({ href, children, ...props }) {
-    if (!href) {
-      return <span>{children}</span>;
-    }
+/**
+ * Build the ReactMarkdown component map for a given article slug.
+ *
+ * External link metadata is encoded in the standard Markdown title attribute:
+ *   - `[text](url "affiliate:vendor")` → affiliate link, fires affiliate_click
+ *   - `[text](url "affiliate")`        → affiliate link, no vendor specified
+ *   - `[text](url "resource:id")`      → resource link with id, fires resource_click
+ *   - `[text](url "resource")`         → resource link, no id, fires resource_click
+ *   - `[text](url)`                    → resource link, no metadata, fires resource_click
+ */
+function makeMarkdownComponents(articleSlug: string): Components {
+  return {
+    a({ href, children, title, ...props }) {
+      if (!href) {
+        return <span>{children}</span>;
+      }
 
-    if (href.startsWith("/")) {
+      // Internal links use Next.js Link for client-side navigation
+      if (href.startsWith("/")) {
+        return (
+          <Link href={href} className={props.className}>
+            {children}
+          </Link>
+        );
+      }
+
+      // External links — parse optional title for affiliate/resource metadata
+      let isAffiliate = false;
+      let vendor: string | undefined;
+      let resourceId: string | undefined;
+
+      if (title) {
+        const [kind, ...rest] = title.split(":");
+        const value = rest.join(":") || undefined;
+        if (kind === "affiliate") {
+          isAffiliate = true;
+          vendor = value;
+        } else if (kind === "resource") {
+          resourceId = value;
+        }
+      }
+
       return (
-        <Link href={href} className={props.className}>
+        <AffiliateLink
+          href={href}
+          isAffiliate={isAffiliate}
+          vendor={vendor}
+          placement="post-body"
+          articleSlug={articleSlug}
+          resourceId={resourceId}
+          className={props.className}
+        >
           {children}
-        </Link>
+        </AffiliateLink>
       );
-    }
-
-    return (
-      <a href={href} className={props.className}>
-        {children}
-      </a>
-    );
-  },
-};
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const posts = await getAllPostsMeta();
@@ -66,6 +104,7 @@ export default async function BlogPostPage({ params }: Props) {
   ]);
 
   const pillar = post.pillar ? getPillarBySlug(post.pillar) : undefined;
+  const markdownComponents = makeMarkdownComponents(slug);
 
   return (
     <main className="pb-16 pt-6 sm:pb-20">
