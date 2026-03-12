@@ -1,11 +1,57 @@
 import matter from "gray-matter";
 
+export type Pillar = {
+  slug: string;
+  title: string;
+  description: string;
+};
+
+export const PILLARS: Pillar[] = [
+  {
+    slug: "engineering-leadership",
+    title: "Engineering Leadership",
+    description:
+      "Practical insights on leading engineering teams, building trust, and creating clarity at scale.",
+  },
+  {
+    slug: "architecture-infrastructure",
+    title: "Architecture / Infrastructure",
+    description:
+      "Patterns for building resilient platforms, making sound architectural decisions, and scaling reliably.",
+  },
+  {
+    slug: "career-growth",
+    title: "Career Growth for Senior Engineers",
+    description:
+      "Navigating the path from senior engineer to staff, principal, and beyond — growing without losing craft.",
+  },
+  {
+    slug: "renewable-energy",
+    title: "Renewable Energy",
+    description:
+      "Engineering challenges and opportunities at the intersection of software and sustainable energy systems.",
+  },
+];
+
+export function getPillarBySlug(pillarSlug: string) {
+  return PILLARS.find((pillar) => pillar.slug === pillarSlug);
+}
+
+export function getPostHref(slug: string) {
+  return `/blog/${slug}/`;
+}
+
+export function getPillarHref(slug: string) {
+  return `/pillars/${slug}/`;
+}
+
 export type PostMeta = {
   slug: string;
   title: string;
   description: string;
   publishedAt: string;
   tags: string[];
+  pillar?: string;
   coverImage?: string;
   author?: string;
   readingTimeMinutes?: number;
@@ -30,7 +76,16 @@ When we take on a new engineering leadership role, the first 90 days are crucial
 - Identify priorities: Identify the priorities for your team and the organization.
 - Establish a presence: Establish a presence in your new role, including setting up your workspace and communication channels.
 - Focus on people: Focus on your team members, including their needs, concerns, and goals.
+
 By focusing on these areas, we can set ourselves up for success in our new engineering leadership role and build a strong foundation for our teams and organizations.
+
+## From Projects to Outcomes
+
+One of the most important early shifts as an engineering leader is moving from a project-delivery mindset to an outcome-ownership mindset. Once the foundations are in place, your team should feel empowered to own products continuously — not just deliver sprints. Read more in [From Projects to a Product Mindset](/blog/from-projects-to-product-mindset/).
+
+## Building the Right Platform Foundation
+
+As you establish priorities, consider how your infrastructure supports — or slows down — your teams. A platform-thinking approach can dramatically reduce cognitive load. Explore the framework in [Platform Thinking for Growing Teams](/blog/platform-thinking-for-growing-teams/).
 
 ## Focus
 - Build relationships
@@ -51,7 +106,16 @@ To adopt platform thinking, follow these steps:
 - Modularize: Modularize your components and applications to make them reusable and maintainable.
 - Standardize: Standardize your processes, tools, and technologies to ensure consistency and scalability.
 - Monitor and adapt: Monitor your platform's performance and adapt it as needed to ensure it continues to meet the needs of your growing team.
+
 By adopting a platform thinking approach, we can build a foundation that can support our growing teams, reduce technical debt, and improve our overall scalability and efficiency.
+
+## Reliability as a Platform Concern
+
+A shared platform that teams depend on must be designed for resilience. When something goes wrong, how you respond and learn matters as much as the technical fix. Learn how to run constructive post-mortems in [Running Incident Reviews Without Blame](/blog/incident-review-without-blame/).
+
+## Architectural Decisions in a Platform Context
+
+Platforms accumulate architectural choices over time. Making those decisions transparently and quickly is essential for maintaining trust with product teams. See how lightweight ADRs help in [Making Architecture Decisions at Speed](/blog/architecture-decisions-at-speed/).
 
 ## Principles
 - Self-service
@@ -72,7 +136,16 @@ To run incident reviews without blame, follow these steps:
 - Identify root causes: Identify the underlying causes of the incident, rather than pointing fingers at specific individuals.
 - Discuss mitigations: Discuss the mitigations that could have prevented the incident, and how we can implement them in the future.
 - Create an action plan: Create a concrete action plan to prevent similar incidents from occurring in the future.
+
 By focusing on the facts, identifying root causes, and creating an action plan, we can run incident reviews that are constructive, learning-oriented, and focused on improvement.
+
+## Reliability Starts with the Platform
+
+Many incidents originate from unclear ownership or fragile shared infrastructure. Building a robust internal platform reduces the blast radius of failure. Learn the foundations in [Platform Thinking for Growing Teams](/blog/platform-thinking-for-growing-teams/).
+
+## Architectural Causes of Incidents
+
+Some of the most damaging incidents stem from undocumented architectural trade-offs made under pressure. Documenting decisions with lightweight ADRs helps teams understand the "why" behind system behavior. Explore this in [Making Architecture Decisions at Speed](/blog/architecture-decisions-at-speed/).
 
 ## Outcomes
 - Better runbooks
@@ -99,7 +172,16 @@ Using ADRs, we can make architecture decisions at speed while maintaining transp
 - Document the ADR: Write the ADR, following the template, and include the input gathered.
 - Review and validate: Review the ADR and validate the decision with the relevant stakeholders.
 - Implement and refine: Implement the decision and refine it as needed based on feedback and new information.
+
 By using ADRs, we can make architecture decisions quickly, while maintaining the quality and integrity of our products.
+
+## Architecture Decisions and Platform Evolution
+
+Platforms are shaped by the accumulation of architectural decisions. Lightweight ADRs give platform teams a shared language for communicating intent and trade-offs. For a broader view of platform strategy, see [Platform Thinking for Growing Teams](/blog/platform-thinking-for-growing-teams/).
+
+## When Architecture Decisions Go Undocumented
+
+Undocumented decisions are a leading cause of surprising incidents. Teams inheriting a system without knowing the original intent are more likely to make unsafe changes. This is one reason why blameless post-mortems are so valuable — explore that process in [Running Incident Reviews Without Blame](/blog/incident-review-without-blame/).
 
 ## ADR Template
 - Context
@@ -116,6 +198,14 @@ A project mindset focuses on delivering a specific outcome, whereas a product mi
 To make this shift, we need to adopt a more long-term perspective, prioritize customer needs, and focus on delivering a continuous stream of value. This means rethinking our priorities, processes, and metrics. For example, we might shift from measuring project success by deadline completion to measuring it by customer satisfaction and retention.
 
 As leaders, it's our job to create an environment that encourages experimentation, learning, and iteration. We need to empower our teams to take ownership of the product, make decisions quickly, and prioritize features that drive customer value. By adopting a product mindset, we can build products that truly matter to our customers and drive long-term success.
+
+## Leadership Sets the Conditions
+
+The shift to product thinking doesn't happen on its own — it requires intentional leadership. Engineering leaders who are new to a role often face the same tension between short-term delivery pressure and long-term ownership. For a framework to navigate this early on, see [Engineering Leadership: The First 90 Days](/blog/engineering-leadership-first-90-days/).
+
+## Technical Ownership Requires Sound Architecture Practices
+
+Long-lived product teams need architecture practices that keep pace with evolving requirements. Lightweight ADRs help teams document decisions as they go, preserving institutional knowledge. Learn how in [Making Architecture Decisions at Speed](/blog/architecture-decisions-at-speed/).
 
 ## Shift
 - From delivery dates to customer impact
@@ -153,6 +243,7 @@ const posts: PostMeta[] = [
       description: "A practical framework to build trust, clarity, and momentum as a new engineering leader.",
       publishedAt: "2026-01-15",
       tags: ["Leadership", "Management", "Teams"],
+      pillar: "engineering-leadership",
       coverImage: "/images/first-90-days.jpg",
       author: "Yeison Lopez",
       readingTimeMinutes: 8,
@@ -163,6 +254,7 @@ const posts: PostMeta[] = [
       description: "How internal platforms reduce cognitive load and increase delivery speed across teams.",
       publishedAt: "2026-01-29",
       tags: ["Infrastructure", "Platform", "Scaling"],
+      pillar: "architecture-infrastructure",
       coverImage: "/images/platform-thinking.jpg",
       author: "Yeison Lopez",
       readingTimeMinutes: 10,
@@ -173,6 +265,7 @@ const posts: PostMeta[] = [
       description: "Techniques to improve reliability and learning culture through actionable post-incident reviews.",
       publishedAt: "2026-02-12",
       tags: ["Reliability", "SRE", "Culture"],
+      pillar: "architecture-infrastructure",
       coverImage: "/images/incident-review.jpg",
       author: "Yeison Lopez",
       readingTimeMinutes: 7,
@@ -183,6 +276,7 @@ const posts: PostMeta[] = [
       description: "A lightweight ADR approach for balancing long-term architecture with near-term delivery.",
       publishedAt: "2026-02-26",
       tags: ["Architecture", "Decision Making", "Delivery"],
+      pillar: "architecture-infrastructure",
       coverImage: "/images/architecture-speed.jpg",
       author: "Yeison Lopez",
       readingTimeMinutes: 9,
@@ -193,6 +287,7 @@ const posts: PostMeta[] = [
       description: "Why engineering organizations scale better when teams own outcomes, not just output.",
       publishedAt: "2026-03-05",
       tags: ["Product", "Leadership", "Strategy"],
+      pillar: "engineering-leadership",
       coverImage: "/images/product-mindset.jpg",
       author: "Yeison Lopez",
       readingTimeMinutes: 6,
@@ -201,7 +296,7 @@ const posts: PostMeta[] = [
 
 
 export async function getAllPostsMeta(): Promise<PostMeta[]> {
-  return posts.sort(
+  return [...posts].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
@@ -257,3 +352,44 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 //     content: parsed.content,
 //   };
 // }
+
+export async function getRelatedPosts(
+  currentSlug: string,
+  limit = 3
+): Promise<PostMeta[]> {
+  const allPosts = await getAllPostsMeta();
+  const currentPost = allPosts.find((p) => p.slug === currentSlug);
+  if (!currentPost) return [];
+
+  const others = allPosts.filter((p) => p.slug !== currentSlug);
+
+  // Score: +2 for same pillar, +1 for each shared tag
+  const scored = others.map((post) => {
+    let score = 0;
+    if (currentPost.pillar && post.pillar === currentPost.pillar) score += 2;
+    for (const tag of currentPost.tags) {
+      if (post.tags.includes(tag)) score += 1;
+    }
+    return { post, score };
+  });
+
+  return scored
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      return (
+        new Date(b.post.publishedAt).getTime() -
+        new Date(a.post.publishedAt).getTime()
+      );
+    })
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
+
+export async function getPostsByPillar(pillarSlug: string): Promise<PostMeta[]> {
+  const allPosts = await getAllPostsMeta();
+  return allPosts.filter((p) => p.pillar === pillarSlug);
+}
