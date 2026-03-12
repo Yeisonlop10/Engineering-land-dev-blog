@@ -11,7 +11,23 @@ function resolveSiteUrl() {
   const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
   if (rawSiteUrl) {
-    return rawSiteUrl.replace(/\/$/, "");
+    let parsedSiteUrl: URL;
+
+    try {
+      parsedSiteUrl = new URL(rawSiteUrl);
+    } catch {
+      throw new Error(
+        `Invalid NEXT_PUBLIC_SITE_URL value "${rawSiteUrl}". Use an absolute origin such as "https://your-domain.com".`
+      );
+    }
+
+    if (parsedSiteUrl.pathname !== "/" || parsedSiteUrl.search || parsedSiteUrl.hash) {
+      throw new Error(
+        `Invalid NEXT_PUBLIC_SITE_URL value "${rawSiteUrl}". NEXT_PUBLIC_SITE_URL must be origin-only; configure the repository path with NEXT_PUBLIC_BASE_PATH instead.`
+      );
+    }
+
+    return parsedSiteUrl.origin;
   }
 
   if (process.env.NODE_ENV === "production") {
@@ -20,7 +36,7 @@ function resolveSiteUrl() {
     );
   }
 
-  const localSiteUrl = `http://localhost:3000${BASE_PATH}`;
+  const localSiteUrl = "http://localhost:3000";
 
   if (typeof console !== "undefined" && console.warn) {
     console.warn(
