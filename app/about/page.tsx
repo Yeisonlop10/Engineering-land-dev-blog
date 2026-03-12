@@ -1,3 +1,14 @@
+import type { Metadata } from "next";
+
+import { getCanonicalUrl } from "@/app/lib/site";
+
+export const metadata: Metadata = {
+  title: "About",
+  alternates: {
+    canonical: getCanonicalUrl("/about/"),
+  },
+};
+
 export default function AboutPage() {
   return (
     <main className="pb-16 pt-6 sm:pb-20">

@@ -1,9 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { format } from "date-fns";
 import { ArrowRight, BookOpenText, Clock3, Layers3, NotebookPen } from "lucide-react";
 
 import { getPosterStyle } from "@/app/lib/presentation";
 import { getAllPostsMeta } from "@/app/lib/posts";
+import { getCanonicalUrl } from "@/app/lib/site";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: getCanonicalUrl("/"),
+  },
+};
 
 export default async function HomePage() {
   const posts = await getAllPostsMeta();
