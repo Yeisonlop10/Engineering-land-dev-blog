@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
@@ -52,9 +53,9 @@ export default function AffiliateDisclosurePage() {
             <p>
               If you have questions about this policy, feel free to reach out
               via the contact information on the{" "}
-              <a href="/about/" className="underline underline-offset-4">
+              <Link href="/about/" className="underline underline-offset-4">
                 About page
-              </a>
+              </Link>
               .
             </p>
           </div>
