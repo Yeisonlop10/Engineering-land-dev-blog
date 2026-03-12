@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AffiliateLink } from "@/app/components/affiliate-link";
 
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
@@ -58,6 +59,57 @@ export default function AffiliateDisclosurePage() {
               </Link>
               .
             </p>
+          </div>
+
+          <div className="mt-10 space-y-6">
+            <h2 className="text-lg font-semibold text-[var(--text-strong)]">
+              Recommended Resources
+            </h2>
+            <p className="text-sm leading-6 muted-copy">
+              The links below illustrate how the site surfaces affiliate and
+              plain resource links. Affiliate links are marked accordingly.
+            </p>
+
+            <ul className="space-y-3 text-sm leading-7 muted-copy">
+              <li>
+                <AffiliateLink
+                  href="https://www.amazon.com/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339"
+                  isAffiliate
+                  vendor="amazon"
+                  placement="affiliate-disclosure-page"
+                  resourceId="book-accelerate"
+                  className="underline underline-offset-4"
+                >
+                  Accelerate — Nicole Forsgren, Jez Humble &amp; Gene Kim
+                </AffiliateLink>{" "}
+                <span className="text-xs opacity-60">(affiliate link)</span>
+              </li>
+              <li>
+                <AffiliateLink
+                  href="https://www.amazon.com/Phoenix-Project-DevOps-Helping-Business/dp/1942788290"
+                  isAffiliate
+                  vendor="amazon"
+                  placement="affiliate-disclosure-page"
+                  resourceId="book-phoenix-project"
+                  className="underline underline-offset-4"
+                >
+                  The Phoenix Project — Gene Kim, Kevin Behr &amp; George Spafford
+                </AffiliateLink>{" "}
+                <span className="text-xs opacity-60">(affiliate link)</span>
+              </li>
+              <li>
+                <AffiliateLink
+                  href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+                  vendor="aws"
+                  placement="affiliate-disclosure-page"
+                  resourceId="aws-well-architected-framework"
+                  className="underline underline-offset-4"
+                >
+                  AWS Well-Architected Framework
+                </AffiliateLink>{" "}
+                <span className="text-xs opacity-60">(free resource)</span>
+              </li>
+            </ul>
           </div>
         </div>
       </section>

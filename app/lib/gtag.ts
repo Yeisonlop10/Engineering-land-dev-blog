@@ -25,3 +25,29 @@ export function pageview(url: string) {
     page_title: document.title,
   });
 }
+
+export type LinkEventParams = {
+  resource_id?: string;
+  vendor?: string;
+  placement?: string;
+  article_slug?: string;
+  link_url: string;
+};
+
+function isGtagReady() {
+  return (
+    typeof window !== "undefined" &&
+    GA_MEASUREMENT_ID &&
+    typeof window.gtag === "function"
+  );
+}
+
+export function trackAffiliateClick(params: LinkEventParams) {
+  if (!isGtagReady()) return;
+  window.gtag!("event", "affiliate_click", params);
+}
+
+export function trackResourceClick(params: LinkEventParams) {
+  if (!isGtagReady()) return;
+  window.gtag!("event", "resource_click", params);
+}

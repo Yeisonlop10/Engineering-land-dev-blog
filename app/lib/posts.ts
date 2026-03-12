@@ -109,6 +109,11 @@ To adopt platform thinking, follow these steps:
 
 By adopting a platform thinking approach, we can build a foundation that can support our growing teams, reduce technical debt, and improve our overall scalability and efficiency.
 
+## Further Reading
+
+The DORA research programme has published extensive data on what separates high-performing engineering organisations from their peers. The annual State of DevOps report is freely available:
+[State of DevOps Report](https://dora.dev/research/ "resource:dora-state-of-devops").
+
 ## Reliability as a Platform Concern
 
 A shared platform that teams depend on must be designed for resilience. When something goes wrong, how you respond and learn matters as much as the technical fix. Learn how to run constructive post-mortems in [Running Incident Reviews Without Blame](/blog/incident-review-without-blame/).
@@ -174,6 +179,14 @@ Using ADRs, we can make architecture decisions at speed while maintaining transp
 - Implement and refine: Implement the decision and refine it as needed based on feedback and new information.
 
 By using ADRs, we can make architecture decisions quickly, while maintaining the quality and integrity of our products.
+
+## Further Reading
+
+The original ADR concept was introduced by Michael Nygard — the full explanation is on his blog:
+[Documenting Architecture Decisions](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions "resource:adr-original-article").
+
+For teams looking for a practical book on evolutionary architecture, *Building Evolutionary Architectures* by Ford, Parsons & Kua is a strong recommendation:
+[Building Evolutionary Architectures on Amazon](https://www.amazon.com/Building-Evolutionary-Architectures-Automated-Governance/dp/1492097543 "affiliate:amazon").
 
 ## Architecture Decisions and Platform Evolution
 
