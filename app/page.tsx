@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { ArrowRight, BookOpenText, Clock3, Layers3, NotebookPen } from "lucide-react";
 
 import { getPosterStyle } from "@/app/lib/presentation";
-import { getAllPostsMeta } from "@/app/lib/posts";
+import { getAllPostsMeta, getPostsByPillar, PILLARS } from "@/app/lib/posts";
 
 export default async function HomePage() {
   const posts = await getAllPostsMeta();
@@ -11,6 +11,13 @@ export default async function HomePage() {
   const totalReadingTime = posts.reduce(
     (sum, post) => sum + (post.readingTimeMinutes ?? 0),
     0
+  );
+
+  const pillarCounts = await Promise.all(
+    PILLARS.map(async (pillar) => {
+      const pillarPosts = await getPostsByPillar(pillar.slug);
+      return { pillar, count: pillarPosts.length };
+    })
   );
 
   return (
@@ -93,6 +100,33 @@ export default async function HomePage() {
               </div>
             </article>
           ) : null}
+        </div>
+      </section>
+
+      <section className="site-shell mt-8 sm:mt-10">
+        <div className="mb-6 flex flex-col gap-4 sm:mb-8">
+          <p className="eyebrow">Browse by topic</p>
+          <h2 className="section-title mt-2">Four pillars of practice.</h2>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {pillarCounts.map(({ pillar, count }) => (
+            <Link
+              key={pillar.slug}
+              href={`/pillars/${pillar.slug}/`}
+              aria-label={`Explore essays on ${pillar.title}`}
+              className="glass-panel pillar-card rounded-[1.75rem] p-6 transition-transform hover:-translate-y-1"
+            >
+              <p className="eyebrow">Pillar</p>
+              <h3 className="pillar-card-title mt-3">{pillar.title}</h3>
+              <p className="mt-2 text-sm leading-6 muted-copy">
+                {pillar.description}
+              </p>
+              <p className="pillar-card-count mt-4">
+                {count} {count === 1 ? "essay" : "essays"}
+              </p>
+            </Link>
+          ))}
         </div>
       </section>
 
