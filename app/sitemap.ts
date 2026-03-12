@@ -21,6 +21,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: getCanonicalUrl("/affiliate-disclosure/"),
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 
   const pillarRoutes: MetadataRoute.Sitemap = PILLARS.map((pillar) => ({

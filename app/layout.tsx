@@ -98,6 +98,14 @@ export default async function RootLayout({
                   Essays on leadership, infrastructure, architecture, and the
                   operating systems behind healthy engineering organizations.
                 </p>
+                <p className="mt-3 max-w-2xl text-xs leading-6 muted-copy">
+                  This site may contain affiliate links. If you purchase through
+                  them, I may earn a commission at no extra cost to you.{" "}
+                  <Link href="/affiliate-disclosure/" className="underline underline-offset-4">
+                    Learn more
+                  </Link>
+                  .
+                </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-3 text-sm">
@@ -106,6 +114,9 @@ export default async function RootLayout({
                 </Link>
                 <Link href="/about/" className="nav-link !px-0">
                   About
+                </Link>
+                <Link href="/affiliate-disclosure/" className="nav-link !px-0">
+                  Affiliate Disclosure
                 </Link>
                 {linkedPillars.map((pillar) => (
                   <Link
