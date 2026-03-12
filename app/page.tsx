@@ -4,7 +4,14 @@ import { format } from "date-fns";
 import { ArrowRight, BookOpenText, Clock3, Layers3, NotebookPen } from "lucide-react";
 
 import { getPosterStyle } from "@/app/lib/presentation";
-import { getAllPostsMeta, getPostsByPillar, PILLARS } from "@/app/lib/posts";
+import {
+  getAllPostsMeta,
+  getPillarBySlug,
+  getPillarHref,
+  getPostHref,
+  getPostsByPillar,
+  PILLARS,
+} from "@/app/lib/posts";
 import { getCanonicalUrl } from "@/app/lib/site";
 
 export const metadata: Metadata = {
@@ -20,6 +27,9 @@ export default async function HomePage() {
     (sum, post) => sum + (post.readingTimeMinutes ?? 0),
     0
   );
+  const featuredPillar = featuredPost?.pillar
+    ? getPillarBySlug(featuredPost.pillar)
+    : undefined;
 
   const pillarCounts = await Promise.all(
     PILLARS.map(async (pillar) => {
@@ -73,6 +83,14 @@ export default async function HomePage() {
 
               <div className="px-2 pb-2 pt-6">
                 <div className="flex flex-wrap gap-2">
+                  {featuredPillar ? (
+                    <Link
+                      href={getPillarHref(featuredPillar.slug)}
+                      className="tag-pill transition-opacity hover:opacity-70"
+                    >
+                      {featuredPillar.title}
+                    </Link>
+                  ) : null}
                   {featuredPost.tags.map((tag) => (
                     <span key={tag} className="tag-pill">
                       {tag}
@@ -98,11 +116,11 @@ export default async function HomePage() {
                 </div>
 
                 <Link
-                  href={`/blog/${featuredPost.slug}/`}
+                  href={getPostHref(featuredPost.slug)}
                   aria-label={`Read the essay ${featuredPost.title}`}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
                 >
-                  Read the essay
+                  Read {featuredPost.title}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -121,7 +139,7 @@ export default async function HomePage() {
           {pillarCounts.map(({ pillar, count }) => (
             <Link
               key={pillar.slug}
-              href={`/pillars/${pillar.slug}/`}
+              href={getPillarHref(pillar.slug)}
               aria-label={`Explore essays on ${pillar.title}`}
               className="glass-panel pillar-card rounded-[1.75rem] p-6 transition-transform hover:-translate-y-1"
             >
@@ -169,6 +187,14 @@ export default async function HomePage() {
 
               <div className="px-1 pb-1 pt-5">
                 <div className="flex flex-wrap gap-2">
+                  {post.pillar ? (
+                    <Link
+                      href={getPillarHref(post.pillar)}
+                      className="tag-pill transition-opacity hover:opacity-70"
+                    >
+                      {getPillarBySlug(post.pillar)?.title ?? post.pillar}
+                    </Link>
+                  ) : null}
                   {post.tags.map((tag) => (
                     <span key={tag} className="tag-pill">
                       {tag}
@@ -194,11 +220,11 @@ export default async function HomePage() {
                 </div>
 
                 <Link
-                  href={`/blog/${post.slug}/`}
-                  aria-label={`Open article ${post.title}`}
+                  href={getPostHref(post.slug)}
+                  aria-label={`Read the essay ${post.title}`}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
                 >
-                  Open article
+                  Read {post.title}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>

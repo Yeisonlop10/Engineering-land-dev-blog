@@ -1,15 +1,43 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getAllPostsMeta, getPostBySlug, getRelatedPosts, PILLARS } from "@/app/lib/posts";
+import {
+  getAllPostsMeta,
+  getPillarBySlug,
+  getPillarHref,
+  getPostBySlug,
+  getRelatedPosts,
+} from "@/app/lib/posts";
 import { getPosterStyle } from "@/app/lib/presentation";
 import { getCanonicalUrl } from "@/app/lib/site";
 import { RelatedPosts } from "@/app/components/related-posts";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { type Components } from "react-markdown";
 import { format } from "date-fns";
 import { ArrowLeft, Clock3, UserRound } from "lucide-react";
 
 type Props = {
   params: Promise<{ slug: string }>;
+};
+
+const markdownComponents: Components = {
+  a({ href, children, ...props }) {
+    if (!href) {
+      return <span>{children}</span>;
+    }
+
+    if (href.startsWith("/")) {
+      return (
+        <Link href={href} className={props.className}>
+          {children}
+        </Link>
+      );
+    }
+
+    return (
+      <a href={href} className={props.className}>
+        {children}
+      </a>
+    );
+  },
 };
 
 export async function generateStaticParams() {
@@ -37,9 +65,7 @@ export default async function BlogPostPage({ params }: Props) {
     getRelatedPosts(slug),
   ]);
 
-  const pillar = post.pillar
-    ? PILLARS.find((p) => p.slug === post.pillar)
-    : undefined;
+  const pillar = post.pillar ? getPillarBySlug(post.pillar) : undefined;
 
   return (
     <main className="pb-16 pt-6 sm:pb-20">
@@ -55,10 +81,10 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
             {pillar ? (
               <Link
-                href={`/pillars/${pillar.slug}/`}
+                href={getPillarHref(pillar.slug)}
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-opacity hover:opacity-70"
               >
-                <span className="tag-pill">{pillar.title}</span>
+                <span className="tag-pill">More from {pillar.title}</span>
               </Link>
             ) : null}
           </div>
@@ -107,7 +133,9 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           <div className="article-prose mt-10">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown components={markdownComponents}>
+              {post.content}
+            </ReactMarkdown>
           </div>
 
           <RelatedPosts posts={relatedPosts} />

@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { ArrowLeft, ArrowRight, BookOpenText, Clock3, Layers3 } from "lucide-react";
 
 import { getPosterStyle } from "@/app/lib/presentation";
-import { PILLARS, getPostsByPillar } from "@/app/lib/posts";
+import { getPostHref, getPostsByPillar, getPillarBySlug, PILLARS } from "@/app/lib/posts";
 import { getCanonicalUrl } from "@/app/lib/site";
 
 type Props = {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PillarPage({ params }: Props) {
   const { pillar: pillarSlug } = await params;
-  const pillar = PILLARS.find((p) => p.slug === pillarSlug);
+  const pillar = getPillarBySlug(pillarSlug);
 
   if (!pillar) notFound();
 
@@ -75,7 +75,7 @@ export default async function PillarPage({ params }: Props) {
               href="/"
               className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
             >
-              Browse all essays
+              Browse all leadership and architecture essays
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -123,11 +123,11 @@ export default async function PillarPage({ params }: Props) {
                   </div>
 
                   <Link
-                    href={`/blog/${post.slug}/`}
-                    aria-label={`Read the essay: ${post.title}`}
+                    href={getPostHref(post.slug)}
+                    aria-label={`Read essay in ${pillar.title}: ${post.title}`}
                     className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
                   >
-                    Read the essay
+                    Read {post.title}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { ArrowRight, BookOpenText, Clock3 } from "lucide-react";
 import { getPosterStyle } from "@/app/lib/presentation";
-import type { PostMeta } from "@/app/lib/posts";
+import { getPostHref, type PostMeta } from "@/app/lib/posts";
 
 type Props = {
   posts: PostMeta[];
@@ -53,11 +53,11 @@ export function RelatedPosts({ posts }: Props) {
               </div>
 
               <Link
-                href={`/blog/${post.slug}/`}
-                aria-label={`Read the essay: ${post.title}`}
+                href={getPostHref(post.slug)}
+                aria-label={`Read related essay: ${post.title}`}
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:translate-x-1"
               >
-                Read the essay
+                Read {post.title}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

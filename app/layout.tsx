@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 
 import { GoogleAnalytics } from "@/app/components/google-analytics";
 import { GoogleAnalyticsPageViews } from "@/app/components/google-analytics-page-views";
+import { getAllPostsMeta, getPillarHref, getPillarBySlug } from "@/app/lib/posts";
 import {
   BING_SITE_VERIFICATION,
   GOOGLE_SITE_VERIFICATION,
@@ -41,9 +42,21 @@ export const metadata: Metadata = {
       : undefined,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const posts = await getAllPostsMeta();
+  const linkedPillars = Array.from(
+    new Set(
+      posts
+        .map((post) => post.pillar)
+        .filter((pillarSlug): pillarSlug is string => Boolean(pillarSlug))
+    )
+  ).flatMap((pillarSlug) => {
+    const pillar = getPillarBySlug(pillarSlug);
+    return pillar ? [pillar] : [];
+  });
+
   return (
     <html lang="en">
       <body className="antialiased">
@@ -89,11 +102,20 @@ export default function RootLayout({
 
               <div className="flex flex-wrap items-center gap-3 text-sm">
                 <Link href="/" className="nav-link !px-0">
-                  Latest posts
+                  Browse all essays
                 </Link>
                 <Link href="/about/" className="nav-link !px-0">
                   About
                 </Link>
+                {linkedPillars.map((pillar) => (
+                  <Link
+                    key={pillar.slug}
+                    href={getPillarHref(pillar.slug)}
+                    className="nav-link !px-0"
+                  >
+                    {pillar.title}
+                  </Link>
+                ))}
                 <span className="muted-copy">© 2026 Yeison Lopez Ibarra</span>
               </div>
             </div>

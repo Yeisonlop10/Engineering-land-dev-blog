@@ -33,6 +33,18 @@ export const PILLARS: Pillar[] = [
   },
 ];
 
+export function getPillarBySlug(pillarSlug: string) {
+  return PILLARS.find((pillar) => pillar.slug === pillarSlug);
+}
+
+export function getPostHref(slug: string) {
+  return `/blog/${slug}/`;
+}
+
+export function getPillarHref(slug: string) {
+  return `/pillars/${slug}/`;
+}
+
 export type PostMeta = {
   slug: string;
   title: string;
@@ -284,7 +296,7 @@ const posts: PostMeta[] = [
 
 
 export async function getAllPostsMeta(): Promise<PostMeta[]> {
-  return posts.sort(
+  return [...posts].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
@@ -363,7 +375,16 @@ export async function getRelatedPosts(
 
   return scored
     .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      return (
+        new Date(b.post.publishedAt).getTime() -
+        new Date(a.post.publishedAt).getTime()
+      );
+    })
     .slice(0, limit)
     .map(({ post }) => post);
 }
