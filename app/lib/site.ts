@@ -1,21 +1,3 @@
-const DEFAULT_SITE_URL = "https://example.com";
-
-const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL;
-
-if (!process.env.NEXT_PUBLIC_SITE_URL) {
-  if (process.env.NODE_ENV === "production") {
-    throw new Error(
-      "NEXT_PUBLIC_SITE_URL is not set. Please configure it in production to avoid incorrect canonical URLs."
-    );
-  } else if (typeof console !== "undefined" && console.warn) {
-    console.warn(
-      `NEXT_PUBLIC_SITE_URL is not set. Falling back to default SITE_URL (${DEFAULT_SITE_URL}).`
-    );
-  }
-}
-
-export const SITE_URL = rawSiteUrl.replace(/\/$/, "");
-
 const rawBasePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
 
 export const BASE_PATH =
@@ -24,6 +6,48 @@ export const BASE_PATH =
     : rawBasePath.startsWith("/")
       ? rawBasePath
       : `/${rawBasePath}`;
+
+function resolveSiteUrl() {
+  const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
+  if (rawSiteUrl) {
+    let parsedSiteUrl: URL;
+
+    try {
+      parsedSiteUrl = new URL(rawSiteUrl);
+    } catch {
+      throw new Error(
+        `Invalid NEXT_PUBLIC_SITE_URL value "${rawSiteUrl}". Use an absolute origin such as "https://your-domain.com".`
+      );
+    }
+
+    if (parsedSiteUrl.pathname !== "/" || parsedSiteUrl.search || parsedSiteUrl.hash) {
+      throw new Error(
+        `Invalid NEXT_PUBLIC_SITE_URL value "${rawSiteUrl}". NEXT_PUBLIC_SITE_URL must be origin-only; configure the repository path with NEXT_PUBLIC_BASE_PATH instead.`
+      );
+    }
+
+    return parsedSiteUrl.origin;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL is required in production so canonical URLs, sitemap.xml, and robots.txt point to the real site."
+    );
+  }
+
+  const localSiteUrl = "http://localhost:3000";
+
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(
+      `NEXT_PUBLIC_SITE_URL is not set. Falling back to ${localSiteUrl} for local development.`
+    );
+  }
+
+  return localSiteUrl;
+}
+
+export const SITE_URL = resolveSiteUrl();
 
 export const GOOGLE_SITE_VERIFICATION =
   process.env.GOOGLE_SITE_VERIFICATION || "";

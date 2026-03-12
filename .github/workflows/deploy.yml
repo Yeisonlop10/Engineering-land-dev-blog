@@ -43,7 +43,7 @@ jobs:
         run: npm run build
         env:
             NEXT_PUBLIC_BASE_PATH: /Engineering-land-dev-blog
-            NEXT_PUBLIC_SITE_URL: https://yeisonlop10.github.io/Engineering-land-dev-blog
+            NEXT_PUBLIC_SITE_URL: https://yeisonlop10.github.io
 
       - name: Disable Jekyll
         run: touch out/.nojekyll

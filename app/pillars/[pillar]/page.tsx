@@ -1,10 +1,12 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { ArrowLeft, ArrowRight, BookOpenText, Clock3, Layers3 } from "lucide-react";
 
 import { getPosterStyle } from "@/app/lib/presentation";
 import { PILLARS, getPostsByPillar } from "@/app/lib/posts";
+import { getCanonicalUrl } from "@/app/lib/site";
 
 type Props = {
   params: Promise<{ pillar: string }>;
@@ -14,7 +16,7 @@ export async function generateStaticParams() {
   return PILLARS.map((pillar) => ({ pillar: pillar.slug }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { pillar: pillarSlug } = await params;
   const pillar = PILLARS.find((p) => p.slug === pillarSlug);
 
@@ -23,6 +25,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: pillar.title,
     description: pillar.description,
+    alternates: {
+      canonical: getCanonicalUrl(`/pillars/${pillar.slug}/`),
+    },
   };
 }
 
