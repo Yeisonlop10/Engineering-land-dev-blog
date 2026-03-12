@@ -1,7 +1,16 @@
 import Link from "next/link";
-import { getAllPostsMeta, getPostBySlug } from "@/app/lib/posts";
+import type { Metadata } from "next";
+import {
+  getAllPostsMeta,
+  getPillarBySlug,
+  getPillarHref,
+  getPostBySlug,
+  getRelatedPosts,
+} from "@/app/lib/posts";
 import { getPosterStyle } from "@/app/lib/presentation";
-import ReactMarkdown from "react-markdown";
+import { getCanonicalUrl } from "@/app/lib/site";
+import { RelatedPosts } from "@/app/components/related-posts";
+import ReactMarkdown, { type Components } from "react-markdown";
 import { format } from "date-fns";
 import { ArrowLeft, Clock3, UserRound } from "lucide-react";
 
@@ -9,36 +18,76 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+const markdownComponents: Components = {
+  a({ href, children, ...props }) {
+    if (!href) {
+      return <span>{children}</span>;
+    }
+
+    if (href.startsWith("/")) {
+      return (
+        <Link href={href} className={props.className}>
+          {children}
+        </Link>
+      );
+    }
+
+    return (
+      <a href={href} className={props.className}>
+        {children}
+      </a>
+    );
+  },
+};
+
 export async function generateStaticParams() {
   const posts = await getAllPostsMeta();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: getCanonicalUrl(`/blog/${post.slug}/`),
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const [post, relatedPosts] = await Promise.all([
+    getPostBySlug(slug),
+    getRelatedPosts(slug),
+  ]);
+
+  const pillar = post.pillar ? getPillarBySlug(post.pillar) : undefined;
 
   return (
     <main className="pb-16 pt-6 sm:pb-20">
       <article className="site-shell max-w-4xl">
         <div className="glass-panel rounded-[2.5rem] px-6 py-6 sm:px-10 sm:py-10">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:-translate-x-1"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to all posts
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-transform hover:-translate-x-1"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to all posts
+            </Link>
+            {pillar ? (
+              <Link
+                href={getPillarHref(pillar.slug)}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-strong)] transition-opacity hover:opacity-70"
+              >
+                <span className="tag-pill">More from {pillar.title}</span>
+              </Link>
+            ) : null}
+          </div>
 
           <header className="mt-8">
             <div className="flex flex-wrap gap-2">
@@ -84,8 +133,12 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           <div className="article-prose mt-10">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown components={markdownComponents}>
+              {post.content}
+            </ReactMarkdown>
           </div>
+
+          <RelatedPosts posts={relatedPosts} />
         </div>
       </article>
     </main>

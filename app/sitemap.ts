@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getAllPostsMeta } from "@/app/lib/posts";
+import { getAllPostsMeta, PILLARS } from "@/app/lib/posts";
 import { getCanonicalUrl } from "@/app/lib/site";
 
 export const dynamic = "force-static";
@@ -29,6 +29,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  const pillarRoutes: MetadataRoute.Sitemap = PILLARS.map((pillar) => ({
+    url: getCanonicalUrl(`/pillars/${pillar.slug}/`),
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.9,
+  }));
+
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
     url: getCanonicalUrl(`/blog/${post.slug}/`),
     lastModified: new Date(post.publishedAt),
@@ -36,5 +43,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...postRoutes];
+  return [...staticRoutes, ...pillarRoutes, ...postRoutes];
 }
