@@ -1,6 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getAllPostsMeta, getPostBySlug } from "@/app/lib/posts";
 import { getPosterStyle } from "@/app/lib/presentation";
+import { getCanonicalUrl } from "@/app/lib/site";
 import ReactMarkdown from "react-markdown";
 import { format } from "date-fns";
 import { ArrowLeft, Clock3, UserRound } from "lucide-react";
@@ -14,13 +16,16 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: getCanonicalUrl(`/blog/${post.slug}/`),
+    },
   };
 }
 

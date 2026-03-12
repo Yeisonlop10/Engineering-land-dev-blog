@@ -7,6 +7,7 @@ import { GoogleAnalyticsPageViews } from "@/app/components/google-analytics-page
 import {
   BING_SITE_VERIFICATION,
   GOOGLE_SITE_VERIFICATION,
+  getCanonicalUrl,
   SITE_URL,
 } from "@/app/lib/site";
 
@@ -15,7 +16,7 @@ function getMetadataBase(): URL {
     return new URL(SITE_URL);
   } catch {
     throw new Error(
-      `Invalid SITE_URL value "${SITE_URL}". SITE_URL must be an absolute URL, including scheme (e.g. "https://example.com").`
+      `Invalid SITE_URL value "${SITE_URL}". SITE_URL must be an absolute URL including the scheme, such as "https://your-domain.com".`
     );
   }
 }
@@ -24,6 +25,9 @@ export const metadata: Metadata = {
   title: "Leadership & Infrastructure",
   description: "Notes on engineering leadership, infrastructure, and architecture.",
   metadataBase: getMetadataBase(),
+  alternates: {
+    canonical: getCanonicalUrl("/"),
+  },
   verification:
     (GOOGLE_SITE_VERIFICATION || BING_SITE_VERIFICATION)
       ? {
