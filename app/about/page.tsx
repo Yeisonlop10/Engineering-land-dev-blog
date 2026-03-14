@@ -20,15 +20,16 @@ export default function AboutPage() {
               Practical writing for engineering organizations in motion.
             </h1>
             <p className="lead-copy mt-6">
-              Hi. I&apos;m Yeison Lopez, an engineering leader with more than 20 years of experience across the engineering industry. From networking, renewable energies
-              to software engineering, I have worked all the way from junior to leadership roles. I write about engineering leadership, infrastructure, platform
-              thinking, reliability, and the systems that help teams scale
-              without increasing chaos.
+              I&apos;m Yeison Lopez, an engineering leader with more than 20
+              years of experience across networking, renewable energy, and
+              software engineering. I write about leadership, platform
+              strategy, reliability, and the operating systems teams need to
+              scale with clarity instead of chaos.
             </p>
             <p className="mt-5 max-w-2xl text-base leading-8 muted-copy">
-              This publication is built for readers who want grounded
-              tradeoffs, useful operating patterns, and articles that stay
-              readable on long sessions across desktop and mobile.
+              The goal is simple: turn hard-earned lessons into practical
+              essays for leaders and senior engineers who are navigating growth,
+              complexity, and organizational change.
             </p>
           </div>
 
@@ -36,30 +37,32 @@ export default function AboutPage() {
             <div className="glass-panel-soft rounded-[2rem] p-6">
               <p className="eyebrow">What you will find here</p>
               <p className="mt-4 text-lg leading-8 text-[var(--text-strong)]">
-                Essays on team design, platform strategy, architecture
-                decisions, incident learning, and the mechanics behind durable
-                execution.
+                Essays on building effective teams, making better architectural
+                decisions, learning from incidents, and creating engineering
+                organizations that can move fast without losing discipline.
               </p>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="glass-panel-soft rounded-[1.75rem] p-5">
                 <h2 className="text-lg font-semibold text-[var(--text-strong)]">
-                  Editorial quality
+                  Practical perspective
                 </h2>
                 <p className="mt-3 text-sm leading-7 muted-copy">
-                  Strong typography, cleaner metadata surfaces, and richer media
-                  presentation for each article.
+                  Every piece is grounded in real operating tradeoffs, from team
+                  design and delivery models to platform investments and
+                  reliability practices.
                 </p>
               </div>
 
               <div className="glass-panel-soft rounded-[1.75rem] p-5">
                 <h2 className="text-lg font-semibold text-[var(--text-strong)]">
-                  Growth-ready structure
+                  Built for useful reading
                 </h2>
                 <p className="mt-3 text-sm leading-7 muted-copy">
-                  The styling system is set up to scale to more posts, richer
-                  previews, and affiliate-friendly content blocks.
+                  The writing is meant to be clear, direct, and applicable,
+                  whether you are leading a team, shaping a roadmap, or
+                  untangling a difficult technical decision.
                 </p>
               </div>
             </div>
