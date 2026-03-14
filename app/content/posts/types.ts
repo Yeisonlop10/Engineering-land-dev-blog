@@ -13,5 +13,3 @@ export type PostMeta = {
 export type Post = PostMeta & {
   content: string;
 };
-
-export type LocalPost = Post;

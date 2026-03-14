@@ -1,5 +1,5 @@
 import matter from "gray-matter";
-import { LOCAL_POSTS_BY_SLUG, LOCAL_POSTS_META } from "@/app/content/posts";
+import { getLocalPostBySlug, getLocalPostsMeta } from "@/app/content/posts";
 import type { Post, PostMeta } from "@/app/content/posts/types";
 
 export type { Post, PostMeta } from "@/app/content/posts/types";
@@ -63,9 +63,9 @@ async function fetchText(url: string): Promise<string> {
   return res.text();
 }
 
-const posts: PostMeta[] = LOCAL_POSTS_META;
-
 export async function getAllPostsMeta(): Promise<PostMeta[]> {
+  const posts = await getLocalPostsMeta();
+
   return [...posts].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
@@ -94,16 +94,12 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     }
   }
 
-  const localPost = LOCAL_POSTS_BY_SLUG[slug];
+  const localPost = await getLocalPostBySlug(slug);
   if (!localPost) {
     throw new Error(`No local temp content found for slug: ${slug}`);
   }
 
-  const parsed = matter(localPost.content);
-  return {
-    ...meta,
-    content: parsed.content,
-  };
+  return localPost;
 }
 
 export async function getRelatedPosts(
