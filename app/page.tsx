@@ -160,12 +160,15 @@ export default async function HomePage() {
         <div className="mb-6 flex flex-col gap-4 sm:mb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="eyebrow">Recent writing</p>
-            <h2 className="section-title mt-4">A cleaner reading experience for every post.</h2>
+            <h2 className="section-title mt-4">
+              Practical lessons for leading teams and shaping systems.
+            </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 muted-copy">
-            The card system below is designed to scale cleanly as the blog grows
-            and to keep tags, metadata, affiliate references, and future media
-            previews visually consistent.
+            These essays focus on the decisions that matter as organizations
+            grow: how to build trust, reduce complexity, improve reliability,
+            and create engineering systems that can scale without losing
+            direction.
           </p>
         </div>
 
